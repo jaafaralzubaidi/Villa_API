@@ -13,5 +13,8 @@ namespace Villa_VillaAPI.Models.Dto
         [MaxLength(30)]     // without [ApiController] call use => if(!ModalState.isValid) inside the AcitonResult function
                             // when using [ApiController] and ModalState the modalState will only execute if it passes valid through the [ApiController]
         public string Name { get; set; }
+
+        public int Occupancy { get; set; }
+        public int Sqft { get; set; }
     }
 }
