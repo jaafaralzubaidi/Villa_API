@@ -1,10 +1,17 @@
 //using Serilog;
 
+using Microsoft.EntityFrameworkCore;
+using Villa_VillaAPI.Data;
 using Villa_VillaAPI.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Database Dependency Injection  Microsoft.EntityFrameworkCore.SqlServer and Microsoft.EntityFrameworkCore.Tools
+builder.Services.AddDbContext<ApplicationDbContext>(option =>
+{
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+});
 
 // Changing Logger with Dependency Injection. Instead of using the build in (console logging) 
 // after installing Serilog.AspNetCore and Seril.Sinks.File will log to a file instead of the console window
@@ -17,7 +24,7 @@ var builder = WebApplication.CreateBuilder(args);
 // addSingleton     -> maximum life time when the application start, one object throughout the application 
 // addScoped        -> for every request it will create a new object
 // addTransient     -> every time object is accessed (if 1 request and object accessed 10 times, it will create 10 different objects)
-builder.Services.AddSingleton<ILogging, LoggingV2>();
+//builder.Services.AddSingleton<ILogging, LoggingV2>();
 
 builder.Services
     .AddControllers(option => {

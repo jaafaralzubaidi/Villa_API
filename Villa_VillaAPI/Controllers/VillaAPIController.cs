@@ -14,14 +14,20 @@ namespace Villa_VillaAPI.Controllers
     public class VillaAPIController : ControllerBase
     {
         //private readonly ILogger<VillaAPIController> _logger; // build-in logger
-        private readonly ILogging _logger;      // custom dependency injection
+        //private readonly ILogging _logger;      // custom dependency injection
         // Because of independence injection
         // .NET core will provide the implementation of in _logger
         // we don't have to instantiate the class
         //public VillaAPIController(ILogger<VillaAPIController> logger)
-        public VillaAPIController(ILogging logger)
+        //public VillaAPIController(ILogging logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        // Default
+        public VillaAPIController()
         {
-            _logger = logger;
+            
         }
 
 
@@ -31,7 +37,7 @@ namespace Villa_VillaAPI.Controllers
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
             //_logger.LogInformation("Getting all Villas information");
-            _logger.Log("Getting all Villas information", "");      //custom logger
+            //_logger.Log("Getting all Villas information", "");      //custom logger
             return Ok(VillaStore.villaList);
         }
 
@@ -48,7 +54,7 @@ namespace Villa_VillaAPI.Controllers
         public ActionResult GetVilla(int id)
         {
             if (id == 0) {
-                _logger.Log("Get Villa error with id: " + id, "error");
+                //_logger.Log("Get Villa error with id: " + id, "error"); // custom Logger
                 return BadRequest();
             }
 
