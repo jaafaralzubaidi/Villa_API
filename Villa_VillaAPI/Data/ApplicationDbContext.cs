@@ -16,6 +16,7 @@ namespace Villa_VillaAPI.Data
         // then       -> update-database
 
         public DbSet<Villa> Villas { get; set; } // function name (Villas) will be the table name in the DB
+        public DbSet<VillaNumber> VillasNumbers { get; set; } // function name (Villas) will be the table name in the DB
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
