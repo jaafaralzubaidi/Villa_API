@@ -36,6 +36,9 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 // adding VillaRepository score for dependency injection
 builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 
+// adding VillaNumberRepository for dependency injection
+builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
+
 
 
 

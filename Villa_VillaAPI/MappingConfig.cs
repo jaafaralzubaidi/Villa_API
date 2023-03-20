@@ -24,6 +24,12 @@ namespace Villa_VillaAPI
 
             CreateMap<Villa, VillaCreateDTO>().ReverseMap(); // shortcut
             CreateMap<Villa, VillaUpdateDTO>().ReverseMap(); // shortcut
+
+            // VillaNumber
+            CreateMap<VillaNumber, VillaNumberDTO>().ReverseMap();
+            CreateMap<VillaNumber, VillaNumberCreateDTO>().ReverseMap();
+            CreateMap<VillaNumber, VillaNumberUpdateDTO>().ReverseMap();
+
         }
     }
 }
