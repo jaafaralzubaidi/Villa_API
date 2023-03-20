@@ -1,8 +1,11 @@
 //using Serilog;
 
 using Microsoft.EntityFrameworkCore;
+using Villa_VillaAPI;
 using Villa_VillaAPI.Data;
 using Villa_VillaAPI.Logging;
+using Villa_VillaAPI.Repository;
+using Villa_VillaAPI.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 // addScoped        -> for every request it will create a new object
 // addTransient     -> every time object is accessed (if 1 request and object accessed 10 times, it will create 10 different objects)
 //builder.Services.AddSingleton<ILogging, LoggingV2>();
+
+
+// adding automapper dependency injection
+builder.Services.AddAutoMapper(typeof(MappingConfig));
+
+// adding VillaRepository score for dependency injection
+builder.Services.AddScoped<IVillaRepository, VillaRepository>();
+
+
+
 
 builder.Services
     .AddControllers(option => {

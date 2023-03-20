@@ -5,9 +5,8 @@ namespace Villa_VillaAPI.Models.Dto
 
 
     // Layer between Villa and ApiController
-    public class VillaDTO
+    public class VillaCreateDTO
     {
-        public int Id { get; set; }
         // validation
         [Required]          // these will work because of [ApiController] in VillaApiController class
         [MaxLength(30)]     // without [ApiController] call use => if(!ModalState.isValid) inside the AcitonResult function

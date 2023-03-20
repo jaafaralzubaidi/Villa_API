@@ -14,7 +14,8 @@ namespace Villa_VillaAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // will be an identity column. Automatically managering the ID
         public int Id { get; set; } // be default 
         public string Name { get; set; }
-        public string Rate { get; set; }
+        public string Details { get; set; }
+        public int Rate { get; set; }
         public int Sqft { get; set; } 
         public int Occupancy { get; set; }
         public string ImageUrl { get; set; }
