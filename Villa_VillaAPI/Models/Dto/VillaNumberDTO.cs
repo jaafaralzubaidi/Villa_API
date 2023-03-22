@@ -9,6 +9,8 @@ namespace Villa_VillaAPI.Models.Dto
     {
         [Required]
         public int VillaNo { get; set; }
+        [Required]
+        public int VillaID { get; set; } //referring to the foreign key
         public string SpecialDetails { get; set; }
 
     }

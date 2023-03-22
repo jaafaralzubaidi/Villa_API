@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +23,15 @@ namespace Villa_VillaAPI.Controllers
         // Default
         protected APIResponse _response;
         private readonly IVillaNumberRepository _dbVillaNumber;  // added it to builder.Services.... in Program.cs
+        private readonly IVillaRepository _dbVilla;
         private readonly IMapper _mapper;                        // added it to builder.Services.... in program.cs
 
-        public VillaNumberAPIController(IVillaNumberRepository dbVillaNumber, IMapper mapper) // dependency injection
+        public VillaNumberAPIController(IVillaNumberRepository dbVillaNumber, IMapper mapper, IVillaRepository dbVilla) // dependency injection
         {
             _dbVillaNumber = dbVillaNumber;
             _mapper = mapper;
             this._response = new APIResponse();
+            _dbVilla = dbVilla;
         }
 
 
@@ -103,7 +106,14 @@ namespace Villa_VillaAPI.Controllers
                 // check if name alreay exists. it will only if ModalState is valid (in this case, it must have a name field)
                 if (await _dbVillaNumber.GetAsync(x => x.VillaNo == createDTO.VillaNo) != null)
                 {
-                    ModelState.AddModelError("CustomError", "Villa Number alreay Exists!");  // first parameter in AddModelError() must be unique
+                    ModelState.AddModelError("CustomError", "Villa Number already Exists!");  // first parameter in AddModelError() must be unique
+                    return BadRequest(ModelState);
+                }
+
+                //validation: for villa ID
+                if(await _dbVilla.GetAsync(u => u.Id == createDTO.VillaID) == null)
+                {
+                    ModelState.AddModelError("CustomError", "Villa ID is Invalid");
                     return BadRequest(ModelState);
                 }
 
@@ -178,6 +188,13 @@ namespace Villa_VillaAPI.Controllers
             {
                 if (updateDTO == null || id != updateDTO.VillaNo)
                     return BadRequest();
+
+                //validation: for villa ID
+                if (await _dbVilla.GetAsync(u => u.Id == updateDTO.VillaID) == null)
+                {
+                    ModelState.AddModelError("CustomError", "Villa ID is Invalid");
+                    return BadRequest(ModelState);
+                }
 
                 VillaNumber model = _mapper.Map<VillaNumber>(updateDTO);
 
