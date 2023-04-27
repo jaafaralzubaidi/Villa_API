@@ -14,7 +14,21 @@ namespace Villa_VillaAPI.Models.Dto
         public string Name { get; set; }
 
         public int Occupancy { get; set; }
-        public string Details { get; set; }
+        public string Details { get; set; } // without the ? it will .NET6 will assume it is a required property. Can change that 
+
+ 
+
+        /* Right click on project
+        * Edit Project File
+        * find   <PropertyGroup>
+        *           <TargetFramework>net7.0</TargetFramework>
+        *           <Nullable>enable</Nullable>
+        *           <ImplicitUsings>enable</ImplicitUsings>
+        *         </PropertyGroup>
+        * change enable to disable or remove the line
+        * 
+ 
+        */
         public int Sqft { get; set; }
         [Required]
         public int Rate { get; set; }

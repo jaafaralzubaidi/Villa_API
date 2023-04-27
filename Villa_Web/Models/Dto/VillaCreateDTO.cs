@@ -14,12 +14,12 @@ namespace Villa_Web.Models.Dto
         public string Name { get; set; }
 
         public int Occupancy { get; set; }
-        public string Details { get; set; }
+        public string? Details { get; set; }  // the ? will make it nullable and it will not be a required field in CreateVilla.cshtml
         public int Sqft { get; set; }
         [Required]
         public int Rate { get; set; }
-        public string ImageUrl { get; set; }
-        public string Amenity { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? Amenity { get; set; }
 
     }
 }
