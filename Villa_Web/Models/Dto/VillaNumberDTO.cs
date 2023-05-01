@@ -13,5 +13,7 @@ namespace Villa_Web.Models.Dto
         public int VillaID { get; set; } //referring to the foreign key
         public string SpecialDetails { get; set; }
 
+        public VillaDTO Villa { get; set; }
+
     }
 }
