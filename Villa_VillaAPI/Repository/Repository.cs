@@ -15,6 +15,7 @@ namespace Villa_VillaAPI.Repository
         public Repository(ApplicationDbContext db)
         {  
             _db = db;
+            //_db.VillasNumbers.Include(u => u.Villa).ToList();   // Villa will be populated when the VillaNumber gets retrieved.
             this.dbSet = _db.Set<T>();
         }
 
@@ -26,8 +27,8 @@ namespace Villa_VillaAPI.Repository
         }
 
 
-
-        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true)
+        
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
@@ -42,6 +43,14 @@ namespace Villa_VillaAPI.Repository
             {
                 query = query.Where(filter);
             }
+            if(includeProperties != null) // to retrieve the Villa based on the VillaNumber.. // "Villa, VillaSpecial" as a csv and load
+            {
+                // split based on comma
+                foreach (var includeProp in includeProperties.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)) 
+                {
+                    query =  query.Include(includeProp);
+                }
+            }
             return await query.FirstOrDefaultAsync();
 
 
@@ -49,13 +58,21 @@ namespace Villa_VillaAPI.Repository
 
 
         // Get all villas but if needed can apply some filter 
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;   // To apply query on _db.villas
 
             if (filter != null) // whatever filter will have if not null will apply it
             {
                 query = query.Where(filter);
+            }
+            if (includeProperties != null) // handing the includeProperties
+            {
+                // split based on comma
+                foreach (var includeProp in includeProperties.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
             }
             return await query.ToListAsync();
 
